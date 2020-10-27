@@ -16,6 +16,10 @@ export default {
 
   changeTeam(teamName, player) {
     return http.put(`/players/${teamName}`, player);
+  },
+
+  updateProtection(playerList) {
+    return http.put(`/players`, playerList);
   }
 
 }

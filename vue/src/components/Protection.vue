@@ -1,31 +1,194 @@
 <template>
-    <div id='protection'>
-        <h2>Protected List</h2>
+  <div id="protection">
+    <h2>Protected List</h2>
 
-        <h4>US Allocated Players</h4>
-        <select >
-            <option ></option>
-        </select>
-        
-        <h4>Non-Allocated Players</h4>
-        <select name="" id=""></select>
-        
+    <h4>US Allocated Players</h4>
+    <table>
+      <tr>
+        <th>
+          <div class="table-head">
+            <div>Player</div>
+            <img
+              class="sort"
+              src="../assets/sortSmall.png"
+              v-on:click="sort('name')"
+            />
+          </div>
+        </th>
+        <th>
+          <div class="table-head">
+            <div>Position</div>
+            <img
+              class="sort"
+              src="../assets/sortSmall.png"
+              v-on:click="sort('position')"
+            />
+          </div>
+        </th>
+        <th>
+          <div class="table-head">
+            <div>Protect</div>
+          </div>
+        </th>
+      </tr>
+      <tr v-if="players.length == 0">
+        <td id="no-team" colspan="5">No team selected</td>
+      </tr>
+      <tr v-if="allocatedPlayers.length == 0 && players.length > 0">
+        <td id="no-team" colspan="5">No allocated players on roster</td>
+      </tr>
+      <tr v-for="player in allocatedPlayers" v-bind:key="player.playerId">
+        <td>{{ player.name }}</td>
+        <td>{{ player.position }}</td>
+        <td>
+          <input
+            id="protection-toggle"
+            v-model="player.protecc"
+            type="checkbox"
+          />
+        </td>
+      </tr>
+    </table>
+
+    <h4>Non-Allocated Players</h4>
+    <table>
+      <tr>
+        <th>
+          <div class="table-head">
+            <div>Player</div>
+            <img
+              class="sort"
+              src="../assets/sortSmall.png"
+              v-on:click="sort('name')"
+            />
+          </div>
+        </th>
+        <th>
+          <div class="table-head">
+            <div>Position</div>
+            <img
+              class="sort"
+              src="../assets/sortSmall.png"
+              v-on:click="sort('position')"
+            />
+          </div>
+        </th>
+        <th>
+          <div class="table-head">
+            <div>Protect</div>
+          </div>
+        </th>
+      </tr>
+      <tr v-if="players.length == 0">
+        <td id="no-team" colspan="5">No team selected</td>
+      </tr>
+      <tr v-for="player in nonAllocatedPlayers" v-bind:key="player.playerId">
+        <td>{{ player.name }}</td>
+        <td>{{ player.position }}</td>
+        <td>
+          <input
+            id="protection-toggle"
+            v-model="player.protecc"
+            type="checkbox"
+          />
+        </td>
+      </tr>
+    </table>
+
+    <div>
+      <button id="protection-submit" v-on:click="protect()">Submit</button>
     </div>
+  </div>
 </template>
 
 <script>
+import service from "@/services/WosoService.js";
+
 export default {
-    data() {
-        return {
+  data() {
+    return {};
+  },
+  props: ["players"],
 
-
-        }
+  computed: {
+    allocatedPlayers() {
+      let filterList = this.players.filter((player) => {
+        return player.allocated == true;
+      });
+      return filterList;
     },
-    props: ['players']
 
-}
+    nonAllocatedPlayers() {
+      let filterList = this.players.filter((player) => {
+        return player.allocated == false;
+      });
+      return filterList;
+    },
+  },
+
+  methods: {
+    protect() {
+      let playerList = this.allocatedPlayers.concat(this.nonAllocatedPlayers);
+
+      service
+        .updateProtection(playerList)
+        .then((response) => {
+            if (response.status == 200) {
+                alert("Successful protection");
+            }
+        })
+        .catch((error) => {
+          const response = error.response;
+          this.errors = true;
+          if (response.status === 400) {
+            alert("Bad Request: Validation Errors");
+          }
+        });
+    },
+  },
+};
 </script>
 
 <style>
+table {
+  border-collapse: collapse;
+  margin: 10px;
+}
 
+table,
+th,
+td {
+  border: 1px solid black;
+}
+
+th,
+td {
+  padding: 5px;
+}
+
+#no-team {
+  text-align: center;
+}
+
+.table-head {
+  display: flex;
+  justify-content: space-between;
+}
+
+h2 {
+  margin-left: 2px;
+}
+
+.sort {
+  padding: 0px 5px 0px;
+  max-width: 10px;
+}
+
+#protection-submit {
+    margin: 10px;
+}
+
+h4 {
+  margin: 10px;
+}
 </style>

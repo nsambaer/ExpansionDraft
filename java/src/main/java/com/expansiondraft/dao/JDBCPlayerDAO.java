@@ -65,6 +65,12 @@ public class JDBCPlayerDAO implements PlayerDAO {
 		return newPlayer;
 	}
 	
+	@Override
+	public boolean updateProtection(List<Player> players) {
+		
+		return true;
+	}
+	
 	
 	private Player mapRowToPlayer(SqlRowSet results) {
 		Player player = new Player();
@@ -76,5 +82,6 @@ public class JDBCPlayerDAO implements PlayerDAO {
 		player.setAllocated(results.getBoolean("allocated"));
 		return player;
 	}
-	
+
+
 }

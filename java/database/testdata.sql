@@ -19,7 +19,11 @@ CONSTRAINT check_player_position CHECK (position IN ('GK', 'DF', 'MF', 'FW'))
 INSERT INTO players (name, position, team_name)
 VALUES ('Veronica Latsko', 'FW', 'Houston Dash'),
         ('Haley Hanson', 'MF', 'Houston Dash'),
-        ('Zoe Morse', 'DF', 'Chicago Red Stars');
+        ('Zoe Morse', 'DF', 'Chicago Red Stars'),
+        ('Madison Pogarch', 'DF', 'Portland Thorns');
+
+INSERT INTO players (name, position, team_name, allocated)       
+VALUES ('Lindsey Horan', 'MF', 'Portland Thorns', true);
 
 SELECT * FROM players;
 
