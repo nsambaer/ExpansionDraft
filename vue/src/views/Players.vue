@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import PlayerTable from '@/components/PlayerTable.vue'
-import service from '@/services/WosoService.js'
+import PlayerTable from '@/components/PlayerTable'
+import service from '@/services/WosoService'
 
 export default {
 
@@ -30,7 +30,7 @@ export default {
         const response = error.response;
         this.errors = true;
         if (response.status === 400) {
-          this.errorMsg = "Bad Request: Validation Errors";
+          this.errorMsg = 'Bad Request: Validation Errors';
         }
       });
   },

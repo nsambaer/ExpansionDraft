@@ -1,5 +1,6 @@
 <template>
-  <div id="teams">
+  <div id="louisville">
+    <player-table v-bind:players="louisPlayers" />
     <div id="team-selector">
       <select v-model="selectedTeam" name="team">
         <option value="">--Select a team--</option>
@@ -10,38 +11,54 @@
       <button v-on:click="changeTeam()">Go</button>
     </div>
 
-    <player-table v-bind:players="players" />
-    <player-protect v-bind:players="players" />
-    <trade @trade="forceRerender()" v-bind:players="players" v-bind:teams="filterTeams" v-bind:selectedTeam="selectedTeam" />
+    <player-select
+      @selection="forceRerender()"
+      v-bind:players="availablePlayers"
+    />
   </div>
 </template>
 
 <script>
-import service from '@/services/WosoService'
-import PlayerTable from '@/components/PlayerTable'
-import PlayerProtect from '@/components/PlayerProtect'
-import Trade from '@/components/TradeWindow'
+import service from '@/services/WosoService';
+import PlayerSelect from '@/components/PlayerSelect';
+import PlayerTable from '@/components/PlayerTable';
 
 export default {
-  name: 'Teams',
+  name: 'Drafting',
 
   components: {
+    PlayerSelect,
     PlayerTable,
-    PlayerProtect,
-    Trade,
   },
 
   data() {
     return {
       selectedTeam: '',
       players: [],
-      filterTeams: [],
+      louisPlayers: [],
     };
   },
 
   methods: {
     forceRerender() {
+      this.getLouisville();
       this.changeTeam();
+    },
+
+    getLouisville() {
+      let louisville = 'Racing Louisville';
+      service
+        .getTeam(louisville)
+        .then((response) => {
+          this.louisPlayers = response.data;
+        })
+        .catch((error) => {
+          const response = error.response;
+          this.errors = true;
+          if (response.status === 400) {
+            this.errorMsg = 'Bad Request: Validation Errors';
+          }
+        });
     },
 
     changeTeam() {
@@ -49,9 +66,6 @@ export default {
         .getTeam(this.selectedTeam)
         .then((response) => {
           this.players = response.data;
-          this.filterTeams = this.teams.filter( (team) => {
-            return team.name != this.selectedTeam;
-          });
           this.forceRerender;
         })
         .catch((error) => {
@@ -63,10 +77,17 @@ export default {
         });
     },
   },
+  created() {
+    this.getLouisville();
+  },
 
   computed: {
     teams() {
       return this.$store.state.teams;
+    },
+
+    availablePlayers() {
+      return this.players;
     },
   },
 };
@@ -75,6 +96,5 @@ export default {
 <style>
 #team-selector {
   padding: 10px;
-  margin-top: 10px;
 }
 </style>

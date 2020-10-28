@@ -91,6 +91,7 @@ export default {
     },
   },
 
+
   computed: {
     sortedPlayers: function () {
       // eslint-disable-next-line
@@ -139,4 +140,5 @@ h2 {
   padding: 0px 5px 0px;
   max-width: 10px;
 }
+
 </style>

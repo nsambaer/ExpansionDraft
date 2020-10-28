@@ -9,7 +9,7 @@
             <ul>
             <router-link :to="{name: 'players'}"><li class="listitem">Players</li></router-link>
             <router-link :to="{name: 'teams'}"><li class="listitem">Teams</li></router-link>
-            <router-link :to="{name: 'louisville'}"><li class="listitem">Louisville</li></router-link>
+            <router-link :to="{name: 'louisville'}"><li class="listitem">Drafting</li></router-link>
             </ul>
         </nav>
     </div>

@@ -68,7 +68,17 @@ public class JDBCPlayerDAO implements PlayerDAO {
 	@Override
 	public boolean updateProtection(List<Player> players) {
 		
-		return true;
+		String sqlUpdate = "UPDATE players SET protected = ? WHERE player_id = ?";
+		int sum = 0;
+		for (Player player : players) {
+			int updated = jdbc.update(sqlUpdate, player.isProtecc(), player.getPlayerId());
+			sum += updated;
+		}
+		
+		if (sum == players.size()) {						
+			return true;
+		}
+		return false;
 	}
 	
 	

@@ -1,6 +1,8 @@
 <template>
-  <div id="protection">
-    <h2>Protected List</h2>
+  <div id="selection">
+    <h2>Drafting List</h2>
+
+    <p v-show="error" id="error-message">{{ errorMessage }}</p>
 
     <h4>US Allocated Players</h4>
     <table>
@@ -27,7 +29,7 @@
         </th>
         <th>
           <div class="table-head">
-            <div>Protect</div>
+            <div>Select</div>
           </div>
         </th>
       </tr>
@@ -75,7 +77,7 @@
         </th>
         <th>
           <div class="table-head">
-            <div>Protect</div>
+            <div>Select</div>
           </div>
         </th>
       </tr>
@@ -88,7 +90,7 @@
         <td>
           <input
             id="protection-toggle"
-            v-model="player.protecc"
+            v-model="player.selected"
             type="checkbox"
           />
         </td>
@@ -96,7 +98,7 @@
     </table>
 
     <div>
-      <button id="protection-submit" v-on:click="protect()">Submit</button>
+      <button id="protection-submit" v-on:click="select()">Submit</button>
     </div>
   </div>
 </template>
@@ -106,7 +108,10 @@ import service from "@/services/WosoService.js";
 
 export default {
   data() {
-    return {};
+    return {
+      error: false,
+      errorMessage: "",
+    };
   },
   props: ["players"],
 
@@ -126,24 +131,53 @@ export default {
     },
   },
 
+
   methods: {
-    protect() {
+    select() {
       let playerList = this.allocatedPlayers.concat(this.nonAllocatedPlayers);
 
-      service
-        .updateProtection(playerList)
-        .then((response) => {
-            if (response.status == 200) {
-                alert("Successful protection");
+      let selectedList = this.selectionLogic(playerList);
+
+      if (!this.error) {
+        service
+          .updateSelection(selectedList)
+          .then((response) => {
+            if (response.status == 202) {
+              console.log("Successful selection");
+              this.$emit('selection');
             }
-        })
-        .catch((error) => {
-          const response = error.response;
-          this.errors = true;
-          if (response.status === 400) {
-            alert("Bad Request: Validation Errors");
-          }
-        });
+          })
+          .catch((error) => {
+            const response = error.response;
+            this.errors = true;
+            if (response.status === 400) {
+              alert("Bad Request: Validation Errors");
+            }
+          });
+      } else {
+        this.errorMessage =
+          "Invalid selections. Either too many total players or allocated players are selected.";
+      }
+    },
+
+    selectionLogic(playerList) {
+      let selectedList = playerList.filter((player) => {
+        return player.selected == true;
+      });
+      let total = 0;
+      let allocateCt = 0;
+
+      selectedList.forEach((player) => {
+        total++;
+        if (player.allocated == true) {
+          allocateCt++;
+        }
+      });
+      if ((allocateCt > 0 && total > 1) || total > 2) {
+        this.error = true;
+        return null;
+      }
+      return selectedList;
     },
   },
 };
@@ -185,10 +219,15 @@ h2 {
 }
 
 #protection-submit {
-    margin: 10px;
+  margin: 10px;
 }
 
 h4 {
+  margin: 10px;
+}
+
+#error-message {
+  color: red;
   margin: 10px;
 }
 </style>

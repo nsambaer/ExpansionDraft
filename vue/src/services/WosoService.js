@@ -11,15 +11,23 @@ export default {
   },
 
   getTeam(teamName) {
-    return http.get(`/players/${teamName}`);
+    return http.get(`/teams/${teamName}`);
   },
 
   changeTeam(teamName, player) {
-    return http.put(`/players/${teamName}`, player);
+    return http.put(`/teams/${teamName}`, player);
+  },
+
+  sendMoney(teamName, money) {
+    return http.post(`/trade/${teamName}`, money)
   },
 
   updateProtection(playerList) {
     return http.put(`/players`, playerList);
+  },
+
+  updateSelection(playerList) {
+    return http.put(`/draft`, playerList);
   }
 
 }

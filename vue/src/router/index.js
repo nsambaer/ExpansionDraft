@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '../views/Home.vue'
+import Home from '@/views/Home'
 import Players from '@/views/Players'
 import Teams from '@/views/Teams'
+import Louisville from '@/views/Louisville'
 
 Vue.use(Router)
 
@@ -36,7 +37,14 @@ const router = new Router({
       path: '/teams',
       name: 'teams',
       component: Teams
-    }
+    },
+    {
+      path: '/drafting',
+      name: 'louisville',
+      component: Louisville
+    },
+
+
   ]
 })
 

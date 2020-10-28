@@ -20,5 +20,8 @@ export default {
 
 <style>
 
+button {
+  margin: 5px;
+}
 
 </style>

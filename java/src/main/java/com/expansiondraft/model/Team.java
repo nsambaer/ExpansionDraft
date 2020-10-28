@@ -3,23 +3,24 @@ package com.expansiondraft.model;
 public class Team {
 
 	private int teamId;
-	private String name;
+	private String teamName;
+	private int allocationMoney;
 	
 	public Team () {
 		
 	}
 	
-	public Team(int teamId, String name) {
+	public Team(int teamId, String name, int allocationMoney) {
 		this.teamId = teamId;
-		this.name = name;
+		this.teamName = name;
 	}
 
-	public String getName() {
-		return name;
+	public String getTeamName() {
+		return teamName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTeamName(String name) {
+		this.teamName = name;
 	}
 
 	public int getTeamId() {
@@ -28,6 +29,14 @@ public class Team {
 
 	public void setTeamId(int teamId) {
 		this.teamId = teamId;
+	}
+
+	public int getAllocationMoney() {
+		return allocationMoney;
+	}
+
+	public void setAllocationMoney(int allocationMoney) {
+		this.allocationMoney = allocationMoney;
 	}
 	
 	
