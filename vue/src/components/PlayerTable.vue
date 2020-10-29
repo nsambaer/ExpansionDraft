@@ -1,6 +1,6 @@
 <template>
   <div class="container" id="player-table">
-    <h2>Player List</h2>
+    <h2 id="title">Player List</h2>
     <table>
       <tr>
         <th>
@@ -131,6 +131,9 @@ th, td {
   justify-content: space-between;
 }
 
+#title {
+  margin-bottom: 10px;
+}
 
 .sort {
   padding: 0px 5px 0px;

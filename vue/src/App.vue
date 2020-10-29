@@ -26,4 +26,16 @@ export default {
   padding: 10px;
 }
 
+.small-container {
+  margin-bottom: 10px;
+}
+
+h2 {
+  margin: 0px;
+}
+
+button {
+  margin: 10px;
+}
+
 </style>

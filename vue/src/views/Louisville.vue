@@ -1,7 +1,6 @@
 <template>
   <div id="louisville">
-    <player-table id="roster" v-bind:players="louisPlayers" />
-    <div id="team-selector" class="container">
+    <div id="drafting" class="container">
       <select v-model="selectedTeam" name="team">
         <option value="">--Select a team--</option>
         <option v-for="team in teams" v-bind:key="team.id">
@@ -9,13 +8,14 @@
         </option>
       </select>
       <button v-on:click="changeTeam()">Go</button>
-    </div>
-
-    <div id="draft-list">
       <player-select
         @selection="forceRerender()"
         v-bind:players="availablePlayers"
       />
+    </div>
+
+    <div id="roster" >
+    <player-table v-bind:players="louisPlayers" />
     </div>
   </div>
 </template>
@@ -98,22 +98,19 @@ export default {
 <style>
 #louisville {
   display: grid;
+  grid-template-columns: 1 fr 1fr;
   grid-template-areas: 
-  'select select'
-  'roster draft';
+  "drafting roster";
 }
 
 #roster {
   grid-area: "roster";
 }
 
-#draft-list {
+#drafting {
   grid-area: "draft";
-
 }
 
-#team-selector {
-  grid-area: "select";
-}
+
 
 </style>

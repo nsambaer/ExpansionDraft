@@ -1,5 +1,5 @@
 <template>
-  <div id="selection" class="container">
+  <div id="selection">
     <h2>Drafting List</h2>
 
     <p v-show="error" id="error-message">{{ errorMessage }}</p>
@@ -208,8 +208,6 @@ td {
   display: flex;
   justify-content: space-between;
 }
-
-
 
 .sort {
   padding: 0px 5px 0px;

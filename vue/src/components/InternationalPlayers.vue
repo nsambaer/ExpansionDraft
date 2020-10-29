@@ -1,6 +1,6 @@
 <template>
   <div id="int-players" class="container">
-    <h2>International Player List</h2>
+    <h2 id="title">International Player List</h2>
 
     <p v-show="error" id="error-message">{{ errorMessage }}</p>
 
@@ -184,7 +184,9 @@ td {
   justify-content: space-between;
 }
 
-
+#title {
+  margin-bottom: 10px;
+}
 
 .sort {
   padding: 0px 5px 0px;

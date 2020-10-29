@@ -1,14 +1,16 @@
 <template>
   <div id="trade" v-show="teams.length > 0" class="container">
-    <h2>Trade Window</h2>
+    <h2 id="title">Trade Window</h2>
     <p v-show="error" id="error-message">{{ errorMessage }}</p>
+    <div class="small-container">
     <label class="trade" for="trade-team">Select Team to Trade To: </label>
     <select class="trade" name="trade-team" id="trade-team" v-model="tradeTeam">
       <option v-for="team in teams" v-bind:key="team.id">
         {{ team }}
       </option>
     </select>
-    <br />
+    </div>
+    <div class="small-container">
     <label class="trade" for="trade-player">Select Player to Trade: </label>
     <select
       class="trade"
@@ -31,7 +33,8 @@
         {{ player.name }}
       </option>
     </select>
-    <br />
+    </div>
+    <div class="small-container">
     <label class="trade" for="trade-money"
       >Enter an Amount of Allocation Money to Trade:
     </label>
@@ -41,6 +44,7 @@
       min="0"
       v-model="money.allocationMoney"
     />
+    </div>
     <button v-on:click="trade()">Trade!</button>
   </div>
 </template>
@@ -123,6 +127,9 @@ export default {
 
 <style>
 
+#title {
+  margin-bottom: 10px;
+}
 
 #error-message {
   color: red;

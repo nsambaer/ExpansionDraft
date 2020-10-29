@@ -7,7 +7,7 @@
           {{ team }}
         </option>
       </select>
-      <button v-on:click="changeTeam()">Go</button>
+      <button id="go-btn" v-on:click="changeTeam()">Go</button>
     </div>
 
     <team-money v-bind:team="realTeam" />
@@ -119,5 +119,41 @@ export default {
 </script>
 
 <style>
+
+#teams {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: 
+  "select money"
+  "roster int"
+  "protection trade";
+}
+
+#team-selector {
+  grid-area: 'select';
+}
+#money {
+  grid-area: 'money';
+}
+#player-table {
+  grid-area: 'roster';
+}
+#protection {
+  grid-area: 'protection';
+}
+#int-players {
+  grid-area: 'int';
+}
+#trade {
+  grid-area: 'trade';
+}
+
+button {
+  margin-left: 0px;
+}
+
+#go-btn {
+  margin-left: 10px;
+}
 
 </style>
