@@ -5,23 +5,20 @@
 </template>
 
 <script>
-
-
 export default {
-  name: 'home',
+  name: "home",
 
-  components: {
-    
-  }
+  data() {
+    return {
+      
+    }
+  },
 
-
-}
+  components: {},
+};
 </script>
 
 <style>
 
-button {
-  margin: 5px;
-}
 
 </style>

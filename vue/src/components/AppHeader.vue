@@ -45,10 +45,7 @@ img {
     padding: 5px 30px;
 }
 
-h2 {
-    padding: 10px 8px;
-    margin: 0em;
-}
+
 
 nav {
     margin: 0px 2px;

@@ -1,5 +1,5 @@
 <template>
-  <div id="protection">
+  <div id="protection" class="container">
     <h2>Protected List</h2>
 
     <p v-show="error" id="error-message">{{errorMessage}}</p>
@@ -183,7 +183,6 @@ export default {
 <style>
 table {
   border-collapse: collapse;
-  margin: 10px;
 }
 
 table,
@@ -206,26 +205,16 @@ td {
   justify-content: space-between;
 }
 
-h2 {
-  margin-left: 2px;
-}
 
 .sort {
   padding: 0px 5px 0px;
   max-width: 10px;
 }
 
-#protection-submit {
-  margin: 10px;
-}
-
-h4 {
-  margin: 10px;
-}
 
 #error-message {
     color:  red;
-    margin: 10px;
+
 }
 
 

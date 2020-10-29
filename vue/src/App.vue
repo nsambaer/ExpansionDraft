@@ -23,6 +23,7 @@ export default {
   border: 1px solid #000000;
   border-radius: 5px;
   margin: 10px;
+  padding: 10px;
 }
 
 </style>

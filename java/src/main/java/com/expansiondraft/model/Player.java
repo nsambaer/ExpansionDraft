@@ -18,6 +18,13 @@ public class Player {
 		this.allocated = allocated;
 	}
 	
+	public Player (int playerId, String name, String teamName, String position) {
+		this.playerId = playerId;
+		this.name = name;
+		this.teamName = teamName;
+		this.position = position;
+	}
+	
 	public Player() {
 		
 	}

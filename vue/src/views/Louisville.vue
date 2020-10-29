@@ -1,30 +1,32 @@
 <template>
   <div id="louisville">
-    <player-table v-bind:players="louisPlayers" />
-    <div id="team-selector">
+    <player-table id="roster" v-bind:players="louisPlayers" />
+    <div id="team-selector" class="container">
       <select v-model="selectedTeam" name="team">
         <option value="">--Select a team--</option>
         <option v-for="team in teams" v-bind:key="team.id">
-          {{ team.name }}
+          {{ team }}
         </option>
       </select>
       <button v-on:click="changeTeam()">Go</button>
     </div>
 
-    <player-select
-      @selection="forceRerender()"
-      v-bind:players="availablePlayers"
-    />
+    <div id="draft-list">
+      <player-select
+        @selection="forceRerender()"
+        v-bind:players="availablePlayers"
+      />
+    </div>
   </div>
 </template>
 
 <script>
-import service from '@/services/WosoService';
-import PlayerSelect from '@/components/PlayerSelect';
-import PlayerTable from '@/components/PlayerTable';
+import service from "@/services/WosoService";
+import PlayerSelect from "@/components/PlayerSelect";
+import PlayerTable from "@/components/PlayerTable";
 
 export default {
-  name: 'Drafting',
+  name: "Drafting",
 
   components: {
     PlayerSelect,
@@ -33,7 +35,7 @@ export default {
 
   data() {
     return {
-      selectedTeam: '',
+      selectedTeam: "",
       players: [],
       louisPlayers: [],
     };
@@ -46,9 +48,9 @@ export default {
     },
 
     getLouisville() {
-      let louisville = 'Racing Louisville';
+      let louisville = "Racing Louisville";
       service
-        .getTeam(louisville)
+        .getTeamPlayers(louisville)
         .then((response) => {
           this.louisPlayers = response.data;
         })
@@ -56,14 +58,14 @@ export default {
           const response = error.response;
           this.errors = true;
           if (response.status === 400) {
-            this.errorMsg = 'Bad Request: Validation Errors';
+            this.errorMsg = "Bad Request: Validation Errors";
           }
         });
     },
 
     changeTeam() {
       service
-        .getTeam(this.selectedTeam)
+        .getTeamPlayers(this.selectedTeam)
         .then((response) => {
           this.players = response.data;
           this.forceRerender;
@@ -72,7 +74,7 @@ export default {
           const response = error.response;
           this.errors = true;
           if (response.status === 400) {
-            this.errorMsg = 'Bad Request: Validation Errors';
+            this.errorMsg = "Bad Request: Validation Errors";
           }
         });
     },
@@ -94,7 +96,24 @@ export default {
 </script>
 
 <style>
-#team-selector {
-  padding: 10px;
+#louisville {
+  display: grid;
+  grid-template-areas: 
+  'select select'
+  'roster draft';
 }
+
+#roster {
+  grid-area: "roster";
+}
+
+#draft-list {
+  grid-area: "draft";
+
+}
+
+#team-selector {
+  grid-area: "select";
+}
+
 </style>

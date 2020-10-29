@@ -9,7 +9,7 @@ import com.expansiondraft.model.Team;
 @Component
 public class JDBCTeamDAO implements TeamDAO {
 
-private JdbcTemplate jdbc;
+	private JdbcTemplate jdbc;
 	
 	public JDBCTeamDAO(JdbcTemplate jdbc) {
 		this.jdbc = jdbc;
@@ -38,6 +38,8 @@ private JdbcTemplate jdbc;
 		String sqlUpdate = "UPDATE teams SET money = ? WHERE team_id = ?";
 		
 		jdbc.update(sqlUpdate, newMoney, team.getTeamId());
+		
+		team.setAllocationMoney(newMoney);
 		
 		return team;
 	}

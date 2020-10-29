@@ -7,8 +7,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import com.expansiondraft.model.IntPlayer;
 import com.expansiondraft.model.Player;
-import com.expansiondraft.model.Team;
 
 @Component
 public class JDBCPlayerDAO implements PlayerDAO {
@@ -81,6 +81,22 @@ public class JDBCPlayerDAO implements PlayerDAO {
 		return false;
 	}
 	
+	@Override
+	public Player buyPlayer(String teamName, IntPlayer intPlayer) {
+		Player player = new Player();
+		player.setName(intPlayer.getName());
+		player.setPosition(intPlayer.getPosition());
+		player.setTeamName(teamName);
+		player.setAllocated(false);
+		player.setProtecc(false);
+		
+		String sqlInsert = "INSERT INTO players (name, position, team_name) "
+				+ "VALUES (?, ?, ?)";
+		
+		jdbc.update(sqlInsert, player.getName(), player.getPosition(), player.getTeamName());
+				
+		return player;
+	}
 	
 	private Player mapRowToPlayer(SqlRowSet results) {
 		Player player = new Player();
@@ -92,6 +108,9 @@ public class JDBCPlayerDAO implements PlayerDAO {
 		player.setAllocated(results.getBoolean("allocated"));
 		return player;
 	}
+
+
+
 
 
 }

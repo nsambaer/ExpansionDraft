@@ -10,6 +10,14 @@ export default {
     return http.get('/players/all');
   },
 
+  getIntPlayers() {
+    return http.get('/intPlayers/all');
+  },
+
+  getTeamPlayers(teamName) {
+    return http.get(`/players/${teamName}`);
+  },
+
   getTeam(teamName) {
     return http.get(`/teams/${teamName}`);
   },
@@ -19,7 +27,7 @@ export default {
   },
 
   sendMoney(teamName, money) {
-    return http.post(`/trade/${teamName}`, money)
+    return http.put(`/trade/${teamName}`, money)
   },
 
   updateProtection(playerList) {
@@ -28,6 +36,10 @@ export default {
 
   updateSelection(playerList) {
     return http.put(`/draft`, playerList);
-  }
+  },
+
+  buyPlayers(teamName, playerList) {
+    return http.post(`/teams/${teamName}`, playerList);
+  },
 
 }

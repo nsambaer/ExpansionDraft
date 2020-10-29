@@ -41,4 +41,11 @@ export default {
 
 <style>
 
+.container {
+  border: none;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px;
+}
+
 </style>

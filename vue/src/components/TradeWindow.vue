@@ -1,11 +1,11 @@
 <template>
-  <div id="trade" v-show="players.length > 0">
+  <div id="trade" v-show="teams.length > 0" class="container">
     <h2>Trade Window</h2>
     <p v-show="error" id="error-message">{{ errorMessage }}</p>
     <label class="trade" for="trade-team">Select Team to Trade To: </label>
     <select class="trade" name="trade-team" id="trade-team" v-model="tradeTeam">
       <option v-for="team in teams" v-bind:key="team.id">
-        {{ team.name }}
+        {{ team }}
       </option>
     </select>
     <br />
@@ -39,7 +39,7 @@
       class="trade"
       type="number"
       min="0"
-      v-model="selectedTeam.allocationMoney"
+      v-model="money.allocationMoney"
     />
     <button v-on:click="trade()">Trade!</button>
   </div>
@@ -49,13 +49,17 @@
 import service from "@/services/WosoService";
 
 export default {
-  name: "Trade",
+  name: "TradeWindow",
   data() {
     return {
       tradePlayer: "",
       tradeTeam: "",
       error: false,
       errorMessage: "",
+      money: {
+        teamName: '',
+        allocationMoney: ''
+      }
     };
   },
 
@@ -66,7 +70,7 @@ export default {
       if (this.tradeTeam === "") {
         this.error = true;
         this.errorMessage = "You must select a team to trade to";
-      } else if (this.tradePlayer == "" && this.selectedTeam.allocationMoney == "") {
+      } else if (this.tradePlayer == "" && this.money.allocationMoney == "") {
         this.error = true;
         this.errorMessage =
           "You must select a player or amount of money to trade";
@@ -79,6 +83,8 @@ export default {
               if (response.status == 202) {
                 console.log("Successful player trade");
               }
+              this.tradeTeam = '';
+              this.tradePlayer = '';
               this.$emit("trade");
             })
             .catch((error) => {
@@ -89,13 +95,16 @@ export default {
               }
             });
         }
-        if (this.selectedTeam.allocationMoney != "") {
+        if (this.money.allocationMoney != "") {
+          this.money.teamName = this.selectedTeam;
           service
-            .sendMoney(this.tradeTeam, this.selectedTeam)
+            .sendMoney(this.tradeTeam, this.money)
             .then((response) => {
               if (response.status == 202) {
                 console.log("Successful money trade");
               }
+              this.tradeTeam = '';
+              this.money = { teamName: '', allocationMoney: ''};
               this.$emit("trade");
             })
             .catch((error) => {
@@ -113,16 +122,10 @@ export default {
 </script>
 
 <style>
-.trade {
-  margin: 5px 0px;
-}
 
-label {
-  padding-left: 10px;
-}
 
 #error-message {
   color: red;
-  margin: 10px;
+  
 }
 </style>

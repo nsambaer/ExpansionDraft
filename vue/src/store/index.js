@@ -19,46 +19,7 @@ if(currentToken != null) {
 export default new Vuex.Store({
   state: {
     teams: [
-      {
-        id: 1,
-        name: 'Houston Dash'
-      },
-      {
-        id: 2,
-        name: 'Chicago Red Stars'
-      },
-      {
-        id: 3,
-        name: 'Portland Thorns'
-      },
-      {
-        id: 4,
-        name: 'Sky Blue FC'
-      },
-      {
-        id: 5,
-        name: 'Washington Spirit'
-      },
-      {
-        id: 6,
-        name: 'Utah Royals'
-      },
-      {
-        id: 7,
-        name: 'North Carolina Courage'
-      },
-      {
-        id: 8,
-        name: 'OL Reign'
-      },
-      {
-        id: 9,
-        name: 'Orlando Pride'
-      },
-      {
-        id: 10,
-        name: 'Racing Louisville'
-      }
+      'Houston Dash', 'Chicago Red Stars', 'Portland Thorns', 'Sky Blue FC', 'Washington Spirit', 'Utah Royals', 'North Carolina Courage', 'OL Reign', 'Orlando Pride', 'Racing Louisville'
     ],
 
     token: currentToken || '',
