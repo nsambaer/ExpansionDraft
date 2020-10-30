@@ -89,7 +89,9 @@ export default {
     },
 
     availablePlayers() {
-      return this.players;
+      return this.players.filter((player) => {
+        return player.protecc == false;
+      });
     },
   },
 };

@@ -52,7 +52,13 @@ INSERT INTO teams (name, money)
 VALUES ('Houston Dash', 300),
         ('Portland Thorns', 300),
         ('Chicago Red Stars', 300),
-        ('Racing Louisville', 300);
+        ('Racing Louisville', 300),
+        ('North Carolina Courage', 300),
+        ('Utah Royals', 300),
+        ('OL Reign', 300),
+        ('Orlando Pride', 300),
+        ('Washington Spirit', 300),
+        ('Sky Blue FC', 300);
         
 INSERT INTO int_players (name, position, team_name, price)
 VALUES ('Ellen White', 'FW', 'Manchester City', 200),

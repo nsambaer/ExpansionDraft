@@ -44,8 +44,8 @@
         <td>{{ player.position }}</td>
         <td>
           <input
-            id="protection-toggle"
-            v-model="player.protecc"
+            id="selection-toggle"
+            v-model="player.selected"
             type="checkbox"
           />
         </td>
@@ -89,7 +89,7 @@
         <td>{{ player.position }}</td>
         <td>
           <input
-            id="protection-toggle"
+            id="selection-toggle"
             v-model="player.selected"
             type="checkbox"
           />
@@ -98,7 +98,7 @@
     </table>
 
     <div>
-      <button id="protection-submit" v-on:click="select()">Submit</button>
+      <button id="selection-submit" v-on:click="select()">Submit</button>
     </div>
   </div>
 </template>
@@ -137,7 +137,7 @@ export default {
       let playerList = this.allocatedPlayers.concat(this.nonAllocatedPlayers);
 
       let selectedList = this.selectionLogic(playerList);
-
+      console.log(selectedList);
       if (!this.error) {
         service
           .updateSelection(selectedList)

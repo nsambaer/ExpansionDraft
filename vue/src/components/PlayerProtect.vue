@@ -161,7 +161,7 @@ export default {
     protectionLogic(playerList) {
       let total = 0;
       let allocateCt = 0;
-      playerList.foreach((player) => {
+      playerList.forEach((player) => {
         if (player.protecc == true) {
           total++;
           if (player.allocated == true) {
